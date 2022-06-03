@@ -10,18 +10,9 @@ const App = () => {
   return (
     <>
       <div style={{display: 'flex', flexDirection: 'column'}}>
-        <div style={{background: '#000', height: 400}}>
-          <button style={{paddingTop: 300}} onClick={() => setOpen(true)}>
-            open
-          </button>
-
-        </div>
-        <div style={{background: '#fff', height: 400}}>
-
-        </div>
-        <div style={{background: '#000', height: 400}}>
-
-        </div>
+        <button onClick={() => setOpen(true)}>
+          open
+        </button>
       </div>
 
       <BottomSheetDialog
