@@ -1,7 +1,6 @@
-*.log
-.DS_Store
 node_modules
-.cache
 dist
-.idea/
-.parcel-cache/
+storybook-static
+.DS_Store
+.idea
+*.tsbuildinfo

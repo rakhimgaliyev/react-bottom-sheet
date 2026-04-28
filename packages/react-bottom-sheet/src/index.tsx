@@ -31,8 +31,8 @@ const useStyles = createUseStyles(() => ({
     '@media (min-width: 641px)': {
       left: '50%',
       maxWidth: 500,
-      transform: 'translateX(-50%)',
-      transition: 'translateX(-50%)'
+      transform: 'translate3d(-50%, 0, 0)',
+      transition: `transform ${animationDuration}s cubic-bezier(0.7, 0.3, 0.1, 1)`
     }
   },
   rootIsOpen: {
@@ -45,7 +45,7 @@ const useStyles = createUseStyles(() => ({
     bottom: 0,
     right: 0,
     opacity: 0,
-    background: 'rgba(0, 0, 0, 0.7);',
+    background: 'rgba(0, 0, 0, 0.7)',
     transition: `opacity ${animationDuration}s cubic-bezier(0.7, 0.3, 0.1, 1)`,
     pointerEvents: 'auto',
     '-webkit-transform': 'translate3d(0, 0, 0)'
@@ -121,44 +121,41 @@ const touchInitState = {
 const CLOSE_DIALOG_PERCENT = 0.25
 
 enum BottomSheetStatus {
-  // eslint-disable-next-line no-unused-vars
   DIALOG_INIT = 1,
-  // eslint-disable-next-line no-unused-vars
   DIALOG_STARTED_TO_OPEN,
-  // eslint-disable-next-line no-unused-vars
   DIALOG_IS_OPENING,
-  // eslint-disable-next-line no-unused-vars
   DIALOG_IS_OPEN,
-  // eslint-disable-next-line no-unused-vars
   DIALOG_STARTED_TO_CLOSE,
-  // eslint-disable-next-line no-unused-vars
   DIALOG_IS_CLOSING,
-  // eslint-disable-next-line no-unused-vars
   DIALOG_IS_CLOSED
 }
 
 type PropsType = {
   open: boolean
-  setOpen: (open: boolean) => void
+  onOpenChange?: (open: boolean) => void
+  setOpen?: (open: boolean) => void
   children: React.ReactNode
   header?: React.ReactNode
   footer?: React.ReactNode
-  horizontalScrollElRef?: any
+  horizontalScrollElRef?: React.RefObject<HTMLElement | null>
 }
 
 export const BottomSheetDialog: React.FC<PropsType> = ({
                                                             open,
+                                                            onOpenChange,
                                                             setOpen,
                                                             children,
                                                             header,
                                                             footer,
                                                             horizontalScrollElRef
                                                           }) => {
+  const handleOpenChange = onOpenChange ?? setOpen
+
   const classes = useStyles()
 
   const maskRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
-  const innerRef = useRef(null)
+  const innerRef = useRef<HTMLDivElement>(null)
 
   const windowSize = useWindowSize()
 
@@ -227,9 +224,10 @@ export const BottomSheetDialog: React.FC<PropsType> = ({
   }
 
   const handleTouchStart = useCallback(
-    (event: any) => {
+    (event: TouchEvent) => {
+      const eventTarget = event.target as Node | null
       if (horizontalScrollElRef && horizontalScrollElRef.current) {
-        if (horizontalScrollElRef.current.contains(event.target)) {
+        if (eventTarget && horizontalScrollElRef.current.contains(eventTarget)) {
           setHorizontalScrollElTouch({
             startX: event.touches[0].clientX,
             startY: event.touches[0].clientY,
@@ -246,28 +244,30 @@ export const BottomSheetDialog: React.FC<PropsType> = ({
           return
         }
       }
+      const contentEl = contentRef.current
+      if (!contentEl) {
+        return
+      }
       event.stopPropagation()
-      // @ts-ignore
-      const maxScrollHeight = contentRef.current.scrollHeight - contentRef.current.clientHeight
+      const maxScrollHeight = contentEl.scrollHeight - contentEl.clientHeight
       setIsTouchMoveHandled(false)
       setTouchState({
         ...touchState,
         startY: event.touches[0].clientY,
         touchStartY: event.touches[0].clientY,
         noScroll: maxScrollHeight === 0,
-        // @ts-ignore
-        isTop: contentRef.current.scrollTop === 0,
-        // @ts-ignore
-        startScrollTop: contentRef.current.scrollTop
+        isTop: contentEl.scrollTop === 0,
+        startScrollTop: contentEl.scrollTop
       })
     },
     [horizontalScrollElRef, touchState]
   )
 
   const handleTouchMove = useCallback(
-    (event: any) => {
+    (event: TouchEvent) => {
+      const eventTarget = event.target as Node | null
       if (horizontalScrollElRef && horizontalScrollElRef.current) {
-        if (horizontalScrollElRef.current.contains(event.target)) {
+        if (eventTarget && horizontalScrollElRef.current.contains(eventTarget)) {
           if (!horizontalScrollElTouch.isCalculated) {
             const clientX = event.touches[0].clientX
             if (Math.abs(horizontalScrollElTouch.startX - clientX) < 5) {
@@ -317,13 +317,15 @@ export const BottomSheetDialog: React.FC<PropsType> = ({
           return
         }
       }
+      const contentEl = contentRef.current
+      if (!contentEl) {
+        return
+      }
       const clientY = event.touches[0].clientY
       const touchOffsetY = touchState.startY - clientY
-      // @ts-ignore
-      const isTop = contentRef.current.scrollTop === 0
+      const isTop = contentEl.scrollTop === 0
       const isBottom =
-        // @ts-ignore
-        contentRef.current.scrollTop === contentRef.current.scrollHeight - contentRef.current.clientHeight
+        contentEl.scrollTop === contentEl.scrollHeight - contentEl.clientHeight
 
       let isMoving = isMovingContent
 
@@ -360,9 +362,10 @@ export const BottomSheetDialog: React.FC<PropsType> = ({
   )
 
   const handleTouchEnd = useCallback(
-    (event: any) => {
+    (event: TouchEvent) => {
+      const eventTarget = event.target as Node | null
       if (horizontalScrollElRef && horizontalScrollElRef.current) {
-        if (horizontalScrollElRef.current.contains(event.target)) {
+        if (eventTarget && horizontalScrollElRef.current.contains(eventTarget)) {
           event.stopPropagation()
           return
         }
@@ -373,11 +376,14 @@ export const BottomSheetDialog: React.FC<PropsType> = ({
           return
         }
       }
+      const contentEl = contentRef.current
+      if (!contentEl) {
+        return
+      }
       setIsMovingContent(false)
       setTouchState({
         ...touchState,
-        // @ts-ignore
-        isTop: contentRef.current.scrollTop === 0
+        isTop: contentEl.scrollTop === 0
       })
       setTouchY({
         curr: 0,
@@ -387,8 +393,7 @@ export const BottomSheetDialog: React.FC<PropsType> = ({
       if (touchState.touchStartY !== 0) {
         const touchOffset = touchState.touchStartY - event.changedTouches[0].clientY
         if (touchState.isTop && touchOffset < 0) {
-          // @ts-ignore
-          const clientHeight = contentRef.current.clientHeight
+          const clientHeight = contentEl.clientHeight
           if (clientHeight > 0 && -touchOffset > clientHeight * CLOSE_DIALOG_PERCENT) {
             handleStartClosing()
           }
@@ -398,9 +403,17 @@ export const BottomSheetDialog: React.FC<PropsType> = ({
     [horizontalScrollElRef, touchState]
   )
 
-  const handleOnScroll = (event: any) => {
-    const target = event.target
-    setScrollPercent(target.scrollTop / (target.scrollHeight - target.clientHeight))
+  const handleOnScroll = (event: Event) => {
+    const target = event.target as HTMLDivElement | null
+    if (!target) {
+      return
+    }
+    const scrollableHeight = target.scrollHeight - target.clientHeight
+    if (scrollableHeight <= 0) {
+      setScrollPercent(1)
+      return
+    }
+    setScrollPercent(target.scrollTop / scrollableHeight)
   }
 
   useEffect(() => {
@@ -416,14 +429,14 @@ export const BottomSheetDialog: React.FC<PropsType> = ({
     if (dialogViewState === BottomSheetStatus.DIALOG_IS_CLOSED) {
       clearStates()
       setDialogViewState(BottomSheetStatus.DIALOG_INIT)
-      if (open) {
-        setOpen(false)
+      if (open && handleOpenChange) {
+        handleOpenChange(false)
       }
     }
     if (!open && dialogViewState === BottomSheetStatus.DIALOG_IS_OPEN) {
       handleStartClosing()
     }
-  }, [open, dialogViewState, setOpen])
+  }, [open, dialogViewState, handleOpenChange])
 
   const handleTransitionEnd = useCallback(() => {
     if (dialogViewState === BottomSheetStatus.DIALOG_IS_OPENING) {
@@ -434,59 +447,49 @@ export const BottomSheetDialog: React.FC<PropsType> = ({
   }, [dialogViewState])
 
   useEffect(() => {
+    const node = innerRef.current
+    if (!node) {
+      return
+    }
     if (dialogViewState === BottomSheetStatus.DIALOG_IS_CLOSED) {
-      if (innerRef && innerRef.current) {
-        // @ts-ignore
-        innerRef.current.removeEventListener('touchstart', handleTouchStart)
-        // @ts-ignore
-        innerRef.current.removeEventListener('touchmove', handleTouchMove)
-        // @ts-ignore
-        innerRef.current.removeEventListener('touchend', handleTouchEnd)
-      }
+      node.removeEventListener('touchstart', handleTouchStart)
+      node.removeEventListener('touchmove', handleTouchMove)
+      node.removeEventListener('touchend', handleTouchEnd)
+      return
     }
-
-    if (innerRef && innerRef.current) {
-      // @ts-ignore
-      innerRef.current.addEventListener('touchstart', handleTouchStart, {passive: false})
-      // @ts-ignore
-      innerRef.current.addEventListener('touchmove', handleTouchMove, {passive: false})
-      // @ts-ignore
-      innerRef.current.addEventListener('touchend', handleTouchEnd, {passive: false})
-    }
-
+    node.addEventListener('touchstart', handleTouchStart, {passive: false})
+    node.addEventListener('touchmove', handleTouchMove, {passive: false})
+    node.addEventListener('touchend', handleTouchEnd, {passive: false})
     return () => {
-      if (innerRef && innerRef.current) {
-        // @ts-ignore
-        innerRef.current.removeEventListener('touchstart', handleTouchStart)
-        // @ts-ignore
-        innerRef.current.removeEventListener('touchmove', handleTouchMove)
-        // @ts-ignore
-        innerRef.current.removeEventListener('touchend', handleTouchEnd)
-      }
+      node.removeEventListener('touchstart', handleTouchStart)
+      node.removeEventListener('touchmove', handleTouchMove)
+      node.removeEventListener('touchend', handleTouchEnd)
     }
   }, [dialogViewState, handleTouchStart, handleTouchMove, handleTouchEnd])
 
   useEffect(() => {
+    const contentEl = contentRef.current
     if (dialogViewState === BottomSheetStatus.DIALOG_STARTED_TO_OPEN) {
-      if (contentRef && contentRef.current && children) {
-        if (contentRef.current.scrollHeight !== contentRef.current.clientHeight) {
-          setScrollPercent(0);
-          contentRef.current.addEventListener('scroll', handleOnScroll, {passive: true});
+      if (contentEl && children) {
+        if (contentEl.scrollHeight !== contentEl.clientHeight) {
+          setScrollPercent(0)
+          contentEl.addEventListener('scroll', handleOnScroll, {passive: true})
         } else {
-          setScrollPercent(1);
+          setScrollPercent(1)
         }
       }
     } else if (dialogViewState === BottomSheetStatus.DIALOG_IS_CLOSED) {
-      if (contentRef && contentRef.current) {
-        contentRef.current.removeEventListener('scroll', handleOnScroll)
+      if (contentEl) {
+        contentEl.removeEventListener('scroll', handleOnScroll)
       }
     }
-  }, [children, dialogViewState]);
+  }, [children, dialogViewState])
 
   useEffect(() => {
+    const contentEl = contentRef.current
     return () => {
-      if (contentRef && contentRef.current) {
-        contentRef.current.removeEventListener('scroll', handleOnScroll);
+      if (contentEl) {
+        contentEl.removeEventListener('scroll', handleOnScroll)
       }
     }
   }, [])
@@ -503,15 +506,28 @@ export const BottomSheetDialog: React.FC<PropsType> = ({
         handleStartClosing()
       }
     }
-    if (maskRef && maskRef.current) {
-      maskRef.current.addEventListener('touchstart', handleTouchStart, {passive: false})
+    const node = maskRef.current
+    if (node) {
+      node.addEventListener('touchstart', handleTouchStart, {passive: false})
     }
     return () => {
-      if (maskRef && maskRef.current) {
-        maskRef.current.removeEventListener('touchstart', handleTouchStart)
+      if (node) {
+        node.removeEventListener('touchstart', handleTouchStart)
       }
     }
   }, [dialogViewState])
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isShown) {
+        handleStartClosing()
+      }
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isShown])
 
   const bottomShadow = useMemo(() => {
     if (scrollPercent > 0.99) {
@@ -524,7 +540,7 @@ export const BottomSheetDialog: React.FC<PropsType> = ({
   }, [scrollPercent])
 
   if (dialogViewState === BottomSheetStatus.DIALOG_INIT) {
-    return <React.Fragment/>
+    return null
   }
 
   return (
@@ -533,13 +549,15 @@ export const BottomSheetDialog: React.FC<PropsType> = ({
       <div className={cx(classes.root, isShown && classes.rootIsOpen)} onTransitionEnd={handleTransitionEnd}>
         <div
           className={classes.contentWrap}
+          role='dialog'
+          aria-modal='true'
           style={{
             ...(!isShown && {
-              transform: 'translateY(100%)'
+              transform: 'translate3d(0, 100%, 0)'
             }),
             ...(bottomSheetOffsetY !== 0 && {
               transition: 'none 0s ease 0s',
-              transform: `translateY(${-bottomSheetOffsetY}px`
+              transform: `translate3d(0, ${-bottomSheetOffsetY}px, 0)`
             })
           }}
         >

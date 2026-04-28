@@ -1,71 +1,89 @@
 [![npm version](https://img.shields.io/npm/v/@rakhimgaliyev/react-bottom-sheet.svg?style=flat-square)](https://www.npmjs.com/package/@rakhimgaliyev/react-bottom-sheet)
-[![gzip size][gzip-badge]][unpkg-dist]
 
-**react-bottom-sheet** is implementation of bottom sheet for reactJS platform. Now supports *ONLY* mobile browser including Safari on IOS.
+`@rakhimgaliyev/react-bottom-sheet` is a swipe-to-close bottom sheet for React web apps.
 
-# Installation
+Supports modern mobile browsers (including iOS Safari). This package targets modern JS runtime/browsers (no ES5 build).
+
+## Storybook Preview
+
+Animated states:
+
+![Demo 01](docs/media/video/demo-01.gif)
+![Demo 02](docs/media/video/demo-02.gif)
+![Demo 03](docs/media/video/demo-03.gif)
+
+Mobile screenshots:
+
+![Quick actions](docs/media/quick-actions-mobile.png)
+![Scrollable timeline](docs/media/scrollable-timeline-mobile.png)
+![Commerce checkout](docs/media/commerce-checkout-mobile.png)
+![Horizontal collections](docs/media/horizontal-collections-mobile.png)
+![Team directory](docs/media/team-directory-mobile.png)
+![Settings form](docs/media/settings-form-mobile.png)
+
+## Installation
 
 ```bash
 npm i @rakhimgaliyev/react-bottom-sheet
 ```
 
-or
+## Usage
 
-```bash
-yarn add @rakhimgaliyev/react-bottom-sheet
-```
+### Recommended API (`onOpenChange`)
 
-# Getting started
-
-## Basic usage
-
-```jsx
-import { useState } from "react"
-import { BottomSheetDialog } from "@rakhimgaliyev/react-bottom-sheet"
+```tsx
+import { useState } from "react";
+import { BottomSheetDialog } from "@rakhimgaliyev/react-bottom-sheet";
 
 export default function Example() {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false);
+
   return (
     <>
-      <button onClick={() => setOpen(true)}>
-        open
-      </button>
-      
-      <BottomSheetDialog
-        open={open}
-        setOpen={setOpen}
-      >
-        <div style={{height: 300}}>
-          content here
-        </div>
+      <button onClick={() => setOpen(true)}>Open</button>
+
+      <BottomSheetDialog open={open} onOpenChange={setOpen}>
+        <div style={{ height: 300 }}>Content here</div>
       </BottomSheetDialog>
     </>
-  )
+  );
 }
 ```
 
+### Legacy API (`setOpen`)
 
-# API
+`setOpen` is still supported for backward compatibility:
 
-## props
+```tsx
+<BottomSheetDialog open={open} setOpen={setOpen}>
+  <div>Content</div>
+</BottomSheetDialog>
+```
 
-### open
+## Props
 
-Type: `boolean`
+- `open: boolean` - controls open state.
+- `onOpenChange?: (open: boolean) => void` - recommended controlled callback.
+- `setOpen?: (open: boolean) => void` - legacy alias.
+- `children: ReactNode` - sheet content.
+- `header?: ReactNode` - optional header area.
+- `footer?: ReactNode` - optional footer area.
+- `horizontalScrollElRef?: React.RefObject<HTMLElement | null>` - optional ref to nested horizontal scroller.
 
-The required prop
+## Monorepo
 
-### setOpen
+- `packages/react-bottom-sheet` - published library package.
+- `apps/storybook` - local playground/docs.
 
-Type: `() => void`
+## Development
 
-### header
+```bash
+bun install
+bun run typecheck
+bun run build
+bun run storybook
+```
 
-Type: `ReactNode`
+## License
 
-### footer
-
-Type: `ReactNode`
-
-[gzip-badge]: https://img.badgesize.io/https:/unpkg.com/@rakhimgaliyev/react-bottom-sheet/dist/react-bottom-sheet.cjs.production.min.js?label=gzip%20size&compression=gzip&style=flat-square
-[unpkg-dist]: https://unpkg.com/browse/@rakhimgaliyev/react-bottom-sheet@0.0.2/dist/
+MIT

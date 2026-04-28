@@ -1,0 +1,164 @@
+:root {
+  font-family: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  color: #1c1d20;
+  background: #f4f6fb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.app {
+  min-height: 100vh;
+  padding: 24px 16px 96px;
+  background: radial-gradient(circle at 20% 0%, #f6e4c8 0%, #f6e4c800 35%),
+    radial-gradient(circle at 80% 0%, #d8e8ff 0%, #d8e8ff00 30%), #f4f6fb;
+}
+
+.panel {
+  max-width: 560px;
+  margin: 0 auto;
+  background: #ffffffd6;
+  border: 1px solid #d8deea;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 18px 40px #181f2f1f;
+}
+
+.panel h1 {
+  margin: 0 0 8px;
+  font-size: 22px;
+}
+
+.panel p {
+  margin: 0 0 14px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #4d5565;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.controls button,
+.open-btn {
+  border: 1px solid #c8d0dd;
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.controls button.active {
+  background: #16273f;
+  border-color: #16273f;
+  color: #fff;
+}
+
+.open-btn {
+  width: 100%;
+  background: #0f5f52;
+  border-color: #0f5f52;
+  color: #fff;
+}
+
+.sheet-header {
+  padding: 16px 16px 8px;
+}
+
+.sheet-header h2 {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.1;
+}
+
+.sheet-header p {
+  margin: 6px 0 0;
+  color: #5c5f66;
+  font-size: 14px;
+}
+
+.sheet-footer {
+  border-top: 1px solid #eceff5;
+  padding: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  background: #fff;
+}
+
+.sheet-footer button {
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.sheet-footer button:first-child {
+  border: 1px solid #d4d9e2;
+  background: #fff;
+  color: #293040;
+}
+
+.sheet-footer button:last-child {
+  border: 0;
+  background: #124e44;
+  color: #fff;
+}
+
+.row {
+  margin: 0 16px 10px;
+  border: 1px solid #e2e6ef;
+  border-radius: 10px;
+  background: #f8f9fc;
+  padding: 12px 14px;
+}
+
+.row h3 {
+  margin: 0 0 4px;
+  font-size: 14px;
+}
+
+.row p {
+  margin: 0;
+  font-size: 13px;
+  color: #596074;
+  line-height: 1.35;
+}
+
+.h-scroll {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 0 16px 12px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.h-card {
+  flex: 0 0 220px;
+  border-radius: 12px;
+  border: 1px solid #d9deea;
+  background: linear-gradient(180deg, #eef3ff 0%, #f7f9ff 100%);
+  padding: 12px;
+}
+
+.h-card h3 {
+  margin: 0 0 6px;
+  font-size: 15px;
+}
+
+.h-card p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.35;
+  color: #596074;
+}

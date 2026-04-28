@@ -1,0 +1,28 @@
+{
+  "name": "@apps/storybook",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "build": "storybook build",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@fontsource/manrope": "^5.2.8",
+    "@fontsource/newsreader": "^5.2.8",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "@rakhimgaliyev/react-bottom-sheet": "workspace:*"
+  },
+  "devDependencies": {
+    "storybook": "^10.3.5",
+    "@storybook/react-vite": "^10.3.5",
+    "@storybook/addon-docs": "^10.3.5",
+    "@storybook/addon-a11y": "^10.3.5",
+    "vite": "^7.1.0",
+    "typescript": "^5.9.3",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3"
+  }
+}
