@@ -14,12 +14,18 @@ Animated states:
 
 Mobile screenshots:
 
-<img src="docs/media/quick-actions-mobile.png" alt="Quick actions" width="210" />
-<img src="docs/media/scrollable-timeline-mobile.png" alt="Scrollable timeline" width="210" />
-<img src="docs/media/commerce-checkout-mobile.png" alt="Commerce checkout" width="210" />
-<img src="docs/media/horizontal-collections-mobile.png" alt="Horizontal collections" width="210" />
-<img src="docs/media/team-directory-mobile.png" alt="Team directory" width="210" />
-<img src="docs/media/settings-form-mobile.png" alt="Settings form" width="210" />
+<table>
+  <tr>
+    <td><img src="docs/media/quick-actions-mobile.png" alt="Quick actions" width="210" /></td>
+    <td><img src="docs/media/scrollable-timeline-mobile.png" alt="Scrollable timeline" width="210" /></td>
+    <td><img src="docs/media/commerce-checkout-mobile.png" alt="Commerce checkout" width="210" /></td>
+  </tr>
+  <tr>
+    <td><img src="docs/media/horizontal-collections-mobile.png" alt="Horizontal collections" width="210" /></td>
+    <td><img src="docs/media/team-directory-mobile.png" alt="Team directory" width="210" /></td>
+    <td><img src="docs/media/settings-form-mobile.png" alt="Settings form" width="210" /></td>
+  </tr>
+</table>
 
 ## Installation
 
