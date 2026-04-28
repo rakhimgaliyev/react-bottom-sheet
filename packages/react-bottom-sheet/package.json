@@ -1,6 +1,6 @@
 {
   "name": "@rakhimgaliyev/react-bottom-sheet",
-  "version": "2.0.0-rc.1",
+  "version": "2.0.0",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
