@@ -6,16 +6,6 @@ Supports modern mobile browsers (including iOS Safari). This package targets mod
 
 ## Storybook Preview
 
-Animated states:
-
-<table>
-  <tr>
-    <td><img src="docs/media/video/demo-01.gif" alt="Demo 01" width="220" /></td>
-    <td><img src="docs/media/video/demo-02.gif" alt="Demo 02" width="220" /></td>
-    <td><img src="docs/media/video/demo-03.gif" alt="Demo 03" width="220" /></td>
-  </tr>
-</table>
-
 Mobile screenshots:
 
 <table>
