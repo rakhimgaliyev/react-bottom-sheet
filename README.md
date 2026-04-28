@@ -8,9 +8,13 @@ Supports modern mobile browsers (including iOS Safari). This package targets mod
 
 Animated states:
 
-<img src="docs/media/video/demo-01.gif" alt="Demo 01" width="280" />
-<img src="docs/media/video/demo-02.gif" alt="Demo 02" width="280" />
-<img src="docs/media/video/demo-03.gif" alt="Demo 03" width="280" />
+<table>
+  <tr>
+    <td><img src="docs/media/video/demo-01.gif" alt="Demo 01" width="220" /></td>
+    <td><img src="docs/media/video/demo-02.gif" alt="Demo 02" width="220" /></td>
+    <td><img src="docs/media/video/demo-03.gif" alt="Demo 03" width="220" /></td>
+  </tr>
+</table>
 
 Mobile screenshots:
 
