@@ -8,18 +8,18 @@ Supports modern mobile browsers (including iOS Safari). This package targets mod
 
 Animated states:
 
-![Demo 01](docs/media/video/demo-01.gif)
-![Demo 02](docs/media/video/demo-02.gif)
-![Demo 03](docs/media/video/demo-03.gif)
+<img src="docs/media/video/demo-01.gif" alt="Demo 01" width="280" />
+<img src="docs/media/video/demo-02.gif" alt="Demo 02" width="280" />
+<img src="docs/media/video/demo-03.gif" alt="Demo 03" width="280" />
 
 Mobile screenshots:
 
-![Quick actions](docs/media/quick-actions-mobile.png)
-![Scrollable timeline](docs/media/scrollable-timeline-mobile.png)
-![Commerce checkout](docs/media/commerce-checkout-mobile.png)
-![Horizontal collections](docs/media/horizontal-collections-mobile.png)
-![Team directory](docs/media/team-directory-mobile.png)
-![Settings form](docs/media/settings-form-mobile.png)
+<img src="docs/media/quick-actions-mobile.png" alt="Quick actions" width="210" />
+<img src="docs/media/scrollable-timeline-mobile.png" alt="Scrollable timeline" width="210" />
+<img src="docs/media/commerce-checkout-mobile.png" alt="Commerce checkout" width="210" />
+<img src="docs/media/horizontal-collections-mobile.png" alt="Horizontal collections" width="210" />
+<img src="docs/media/team-directory-mobile.png" alt="Team directory" width="210" />
+<img src="docs/media/settings-form-mobile.png" alt="Settings form" width="210" />
 
 ## Installation
 
