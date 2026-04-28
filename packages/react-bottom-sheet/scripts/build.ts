@@ -12,7 +12,8 @@ await Bun.build({
 
 await Bun.build({
   entrypoints: ["./src/index.tsx"],
-  outfile: "./dist/index.cjs",
+  outdir: "./dist",
+  naming: "[name].cjs",
   target: "browser",
   format: "cjs",
   sourcemap: "external",

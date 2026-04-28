@@ -1,5 +1,5 @@
 {
-  "name": "react-bottom-sheet-monorepo",
+  "name": "react-bottom-sheet",
   "private": true,
   "workspaces": ["packages/*", "apps/*"],
   "scripts": {
@@ -7,6 +7,7 @@
     "typecheck": "bun run --filter '*' typecheck",
     "storybook": "bun run --filter @apps/storybook storybook",
     "build-storybook": "bun run --filter @apps/storybook build-storybook",
-    "playground": "bun run --cwd ./playground-react dev"
+    "playground": "bun run --cwd ./playground-react dev",
+    "publish:npm": "bun run --filter @rakhimgaliyev/react-bottom-sheet publish:npm"
   }
 }
